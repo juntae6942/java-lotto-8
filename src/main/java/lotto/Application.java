@@ -1,5 +1,6 @@
 package lotto;
 
+import lotto.domain.Bonus;
 import lotto.domain.Lotto;
 import lotto.presentation.LottoController;
 
@@ -10,7 +11,7 @@ public class Application {
         LottoController controller = new LottoController();
         int purchaseAmount = controller.purchaseAmount();
         Lotto lotto = controller.drawNumbers();
-
+        Bonus bonus = controller.drawBonus(lotto);
     }
 
 
