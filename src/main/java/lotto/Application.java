@@ -1,23 +1,19 @@
 package lotto;
 
-import lotto.ui.InputView;
+import lotto.domain.Lotto;
+import lotto.presentation.LottoController;
 
 public class Application {
+
     public static void main(String[] args) {
         // TODO: 프로그램 구현
-        InputView inputView = new InputView();
-        int purchaseAmount = purchaseAmount(inputView);
-
+        LottoController controller = new LottoController();
+        int purchaseAmount = controller.purchaseAmount();
+        Lotto lotto = controller.drawNumbers();
 
     }
 
-    private static int purchaseAmount(InputView inputView) {
-        while (true) {
-            try {
-                return inputView.purchaseAmount();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
+
+
+
 }
