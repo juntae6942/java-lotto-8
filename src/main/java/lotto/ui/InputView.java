@@ -1,21 +1,16 @@
 package lotto.ui;
 
 import camp.nextstep.edu.missionutils.Console;
-import lotto.application.validator.PurchaseAmountValidator;
-import lotto.common.NumberValidator;
 
 public class InputView {
 
-    public int purchaseAmount() {
+    public String purchaseAmount() {
         System.out.println("구입금액을 입력해 주세요.");
-        String input = Console.readLine();
-
-        NumberValidator.validateNumber(input);
-        int purchaseAmount = Integer.parseInt(input);
-
-        PurchaseAmountValidator.validatePurchaseAmount(purchaseAmount);
-        return purchaseAmount;
+        return Console.readLine();
     }
 
-
+    public String drawNumbers() {
+        System.out.println("당첨 번호를 입력해 주세요.");
+        return Console.readLine();
+    }
 }
