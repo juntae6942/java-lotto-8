@@ -1,6 +1,6 @@
 package lotto.common;
 
-import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class NumberValidator {
@@ -13,7 +13,7 @@ public class NumberValidator {
         }
     }
 
-    public static void validateNumbers(List<String> inputs) {
+    public static void validateNumbers(Set<String> inputs) {
         inputs.forEach(NumberValidator::validateNumber);
     }
 }

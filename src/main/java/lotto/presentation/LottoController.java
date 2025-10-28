@@ -2,9 +2,12 @@ package lotto.presentation;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lotto.application.validator.LottoValidator;
 import lotto.application.validator.PurchaseAmountValidator;
 import lotto.common.NumberValidator;
+import lotto.domain.Bonus;
 import lotto.domain.Lotto;
 import lotto.ui.InputView;
 
@@ -35,9 +38,9 @@ public class LottoController {
         while (true) {
             try {
                 String input = inputView.drawNumbers();
-                List<String> tokens = Arrays.stream(input.split(","))
+                Set<String> tokens = Arrays.stream(input.split(","))
                         .map(String::trim)
-                        .toList();
+                        .collect(Collectors.toUnmodifiableSet());
                 NumberValidator.validateNumbers(tokens);
 
                 List<Integer> numbers = tokens.stream()
