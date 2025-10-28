@@ -6,11 +6,15 @@ public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         InputView inputView = new InputView();
-        int purchaseAmount;
+        int purchaseAmount = purchaseAmount(inputView);
+
+
+    }
+
+    private static int purchaseAmount(InputView inputView) {
         while (true) {
             try {
-                purchaseAmount = inputView.purchaseAmount();
-                break;
+                return inputView.purchaseAmount();
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
