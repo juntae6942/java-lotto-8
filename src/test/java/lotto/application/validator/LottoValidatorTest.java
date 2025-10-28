@@ -1,0 +1,19 @@
+package lotto.application.validator;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class LottoValidatorTest {
+
+    @DisplayName("로또 번호에 음수값이 들어오면 예외가 발생한다.")
+    @Test
+    void negativeNumberTest() {
+        assertThatThrownBy(() -> LottoValidator.validateRange(-1))
+                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> LottoValidator.validateRanges(List.of(1,2,3,4,10,-1)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+}
