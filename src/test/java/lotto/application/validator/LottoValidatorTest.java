@@ -11,9 +11,14 @@ class LottoValidatorTest {
     @DisplayName("로또 번호에 음수값이 들어오면 예외가 발생한다.")
     @Test
     void negativeNumberTest() {
-        assertThatThrownBy(() -> LottoValidator.validateRange(-1))
-                .isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> LottoValidator.validateRanges(List.of(1,2,3,4,10,-1)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("보너스 번호에 음수값이 들어오면 예외가 발생한다.")
+    @Test
+    void negativeBonusNumberTest() {
+        assertThatThrownBy(() -> LottoValidator.validateRange(-1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
