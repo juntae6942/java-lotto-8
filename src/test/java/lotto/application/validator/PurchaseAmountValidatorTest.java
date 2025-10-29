@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PurchaseAmountValidatorTest {
 
@@ -15,11 +17,10 @@ class PurchaseAmountValidatorTest {
     }
 
     @DisplayName("구입 금액이 1000원 단위가 아니면 예외가 발생한다.")
-    @Test
-    void amountUnitTest() {
-        assertThatThrownBy(() -> PurchaseAmountValidator.validatePurchaseAmount(1100))
-                .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> PurchaseAmountValidator.validatePurchaseAmount(999))
+    @ParameterizedTest
+    @ValueSource(ints = {1100, 999})
+    void amountUnitTest(int input) {
+        assertThatThrownBy(() -> PurchaseAmountValidator.validatePurchaseAmount(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -12,6 +12,8 @@ import lotto.domain.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class LottoManagerTest {
 
@@ -53,8 +55,16 @@ class LottoManagerTest {
     }
 
     @DisplayName("5등이 2개 나머지가 1개씩 있는 당첨 통계를 계산한다")
-    @Test
-    void calculateStatisticsRankTest() {
+    @ParameterizedTest
+    @CsvSource({
+            "FIRST, 1",
+            "SECOND, 1",
+            "THIRD, 1",
+            "FOURTH, 1",
+            "FIFTH, 2",
+            "NONE, 1"
+    })
+    void calculateStatisticsRankTest(Rank rank, int expectedCount) {
         Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
         Bonus bonus = new Bonus(7);
 
@@ -69,11 +79,6 @@ class LottoManagerTest {
         );
         Map<Rank, Integer> result = lottoManager.calculateStatistics(lotto, bonus, tickets);
 
-        assertThat(result.get(Rank.FIRST)).isEqualTo(1);
-        assertThat(result.get(Rank.SECOND)).isEqualTo(1);
-        assertThat(result.get(Rank.THIRD)).isEqualTo(1);
-        assertThat(result.get(Rank.FOURTH)).isEqualTo(1);
-        assertThat(result.get(Rank.FIFTH)).isEqualTo(2);
-        assertThat(result.get(Rank.NONE)).isEqualTo(1);
+        assertThat(result.get(rank)).isEqualTo(expectedCount);
     }
 }
