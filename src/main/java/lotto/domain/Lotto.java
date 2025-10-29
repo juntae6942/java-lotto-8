@@ -19,7 +19,7 @@ public class Lotto {
 
     public void validateNotDuplicate(int number) {
         if (numbers.contains(number)) {
-            throw new IllegalArgumentException("[ERROR] 중복되는 보너스 번호입니다.");
+            throw new IllegalArgumentException("[ERROR] 로또 번호와 중복되는 보너스 번호입니다.");
         }
     }
 
