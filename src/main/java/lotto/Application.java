@@ -13,22 +13,60 @@ import lotto.ui.OutputView;
 public class Application {
     public static void main(String[] args) {
         InputView inputView = new InputView();
-        LottoController controller = new LottoController(inputView);
-        int purchaseAmount = controller.purchaseAmount();
+        OutputView outputView = new OutputView();
+        LottoController controller = new LottoController();
+
+        int purchaseAmount = readPurchaseAmount(inputView, outputView, controller);
         int purchaseCount = controller.purchaseCount(purchaseAmount);
 
-        OutputView outputView = new OutputView();
         outputView.purchaseCount(purchaseCount);
-
         List<LottoTicket> tickets = controller.drawTickets(purchaseCount);
         outputView.lottoTickets(tickets);
 
-        Lotto lotto = controller.drawNumbers();
-        Bonus bonus = controller.drawBonus(lotto);
+        Lotto lotto = readDrawNumbers(inputView, outputView, controller);
+        Bonus bonus = readBonus(lotto, inputView, outputView, controller);
+        winningStatisticsResult(lotto, bonus, tickets, purchaseAmount, outputView, controller);
+    }
 
+    private static void winningStatisticsResult(Lotto lotto, Bonus bonus, List<LottoTicket> tickets,
+                                  int purchaseAmount, OutputView outputView, LottoController controller) {
         Map<Rank, Integer> winningStatistics = controller.winningStatistics(lotto, bonus, tickets);
         outputView.winningStatistics(winningStatistics);
+
         double profitRate = controller.profitRate(purchaseAmount, winningStatistics);
         outputView.profitRate(profitRate);
+    }
+
+    private static int readPurchaseAmount(InputView inputView, OutputView outputView, LottoController controller) {
+        while (true) {
+            try {
+                String purchaseAmount = inputView.purchaseAmount();
+                return controller.purchaseAmount(purchaseAmount);
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
+    }
+
+    private static Lotto readDrawNumbers(InputView inputView, OutputView outputView, LottoController controller) {
+        while (true) {
+            try {
+                String drawNumbers = inputView.drawNumbers();
+                return controller.drawNumbers(drawNumbers);
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
+    }
+
+    private static Bonus readBonus(Lotto lotto, InputView inputView, OutputView outputView, LottoController controller) {
+        while (true) {
+            try {
+                String input = inputView.drawBonusNumber();
+                return controller.drawBonus(input, lotto);
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
     }
 }

@@ -1,7 +1,6 @@
 package lotto.presentation;
 
 import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,65 +14,41 @@ import lotto.domain.Lotto;
 import lotto.domain.LottoTicket;
 import lotto.domain.ProfitRateCalculator;
 import lotto.domain.Rank;
-import lotto.ui.InputView;
 
 public class LottoController {
 
-    private final InputView inputView;
     private final LottoManager lottoManager;
     private final ProfitRateCalculator profitRateCalculator;
 
-    public LottoController(InputView inputView) {
-        this.inputView = inputView;
+    public LottoController() {
         this.lottoManager = new LottoManager();
         this.profitRateCalculator = new ProfitRateCalculator();
     }
 
-    public int purchaseAmount() {
-        while (true) {
-            try {
-                String input = inputView.purchaseAmount();
-                NumberValidator.validateNumber(input);
-                int purchaseAmount = Integer.parseInt(input);
-                PurchaseAmountValidator.validatePurchaseAmount(purchaseAmount);
-                return purchaseAmount;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+    public int purchaseAmount(String number) {
+        NumberValidator.validateNumber(number);
+        int purchaseAmount = Integer.parseInt(number);
+        PurchaseAmountValidator.validatePurchaseAmount(purchaseAmount);
+        return purchaseAmount;
     }
 
-    public Lotto drawNumbers() {
-        while (true) {
-            try {
-                String input = inputView.drawNumbers();
-                Set<String> tokens = Arrays.stream(input.split(","))
-                        .map(String::trim)
-                        .collect(Collectors.toUnmodifiableSet());
-                NumberValidator.validateNumbers(tokens);
-                List<Integer> numbers = tokens.stream()
-                        .map(Integer::parseInt).toList();
-                LottoValidator.validateRanges(numbers);
-                return new Lotto(numbers);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+    public Lotto drawNumbers(String numbers) {
+        Set<String> tokens = Arrays.stream(numbers.split(","))
+                .map(String::trim)
+                .collect(Collectors.toUnmodifiableSet());
+        NumberValidator.validateNumbers(tokens);
+        List<Integer> drawNumbers = tokens.stream()
+                .map(Integer::parseInt).toList();
+        LottoValidator.validateRanges(drawNumbers);
+        return new Lotto(drawNumbers);
     }
 
-    public Bonus drawBonus(Lotto lotto) {
-        while (true) {
-            try {
-                String input = inputView.drawBonusNumber();
-                NumberValidator.validateNumber(input);
-                int number = Integer.parseInt(input);
-                LottoValidator.validateRange(number);
-                lotto.validateNotDuplicate(number);
-                return new Bonus(number);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+    public Bonus drawBonus(String number, Lotto lotto) {
+        NumberValidator.validateNumber(number);
+        int bonusNumber = Integer.parseInt(number);
+        LottoValidator.validateRange(bonusNumber);
+        lotto.validateNotDuplicate(bonusNumber);
+        return new Bonus(bonusNumber);
     }
 
     public int purchaseCount(int purchaseAmount) {
@@ -89,21 +64,6 @@ public class LottoController {
     }
 
     public Map<Rank, Integer> winningStatistics(Lotto lotto, Bonus bonus, List<LottoTicket> tickets) {
-        Map<Rank, Integer> ranks = initRank();
-        for (LottoTicket ticket : tickets) {
-            int count = lottoManager.matchCount(lotto, ticket);
-            boolean bonusMatch = bonus.matches(ticket);
-            Rank rank = Rank.valueOf(count, bonusMatch);
-            ranks.put(rank, ranks.getOrDefault(rank, 0) + 1);
-        }
-        return ranks;
-    }
-
-    private Map<Rank, Integer> initRank() {
-        Map<Rank, Integer> ranks = new EnumMap<>(Rank.class);
-        for (Rank rank : Rank.values()) {
-            ranks.put(rank, 0);
-        }
-        return ranks;
+        return lottoManager.calculateStatistics(lotto, bonus, tickets);
     }
 }
