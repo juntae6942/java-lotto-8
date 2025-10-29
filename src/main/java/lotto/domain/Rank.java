@@ -20,7 +20,7 @@ public enum Rank {
         this.prize = prize;
     }
 
-    private static final Map<Integer, Rank> rankMap = Map.of(
+    private static final Map<Integer, Rank> rankByCount = Map.of(
             6, FIRST,
             4, FOURTH,
             3, FIFTH
@@ -33,7 +33,7 @@ public enum Rank {
             }
             return THIRD;
         }
-        return rankMap.getOrDefault(matchCount, NONE);
+        return rankByCount.getOrDefault(matchCount, NONE);
     }
 
     public String toString() {
