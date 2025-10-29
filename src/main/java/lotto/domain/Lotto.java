@@ -11,6 +11,12 @@ public class Lotto {
         this.numbers = numbers;
     }
 
+    public int matchCount(LottoTicket ticket) {
+        return (int) numbers.stream()
+                .filter(ticket.numbers()::contains)
+                .count();
+    }
+
     public void validateNotDuplicate(int number) {
         if (numbers.contains(number)) {
             throw new IllegalArgumentException("[ERROR] 중복되는 보너스 번호입니다.");
