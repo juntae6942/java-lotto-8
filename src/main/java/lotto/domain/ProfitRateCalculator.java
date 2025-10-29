@@ -20,6 +20,6 @@ public class ProfitRateCalculator {
             int count = winningStatistics.get(rank);
             totalPrizes += prize * count;
         }
-        return Math.round(totalPrizes / purchaseAmount * 10) / 10.0;
+        return Math.round((totalPrizes / purchaseAmount) * 1000) / 10.0;
     }
 }
