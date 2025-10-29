@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lotto.domain.Lotto;
 import lotto.domain.LottoTicket;
+import lotto.domain.RandomLottoTicket;
 
 public class LottoManager {
 
@@ -21,7 +22,7 @@ public class LottoManager {
 
     public List<LottoTicket> drawTickets(int purchaseCount) {
         return IntStream.range(0, purchaseCount)
-                .mapToObj(i -> new LottoTicket())
+                .mapToObj(i -> new RandomLottoTicket())
                 .collect(Collectors.toList());
     }
 }
