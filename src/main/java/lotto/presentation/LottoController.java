@@ -1,7 +1,9 @@
 package lotto.presentation;
 
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lotto.application.LottoManager;
@@ -11,6 +13,7 @@ import lotto.common.NumberValidator;
 import lotto.domain.Bonus;
 import lotto.domain.Lotto;
 import lotto.domain.LottoTicket;
+import lotto.domain.Rank;
 import lotto.ui.InputView;
 
 public class LottoController {
@@ -76,5 +79,24 @@ public class LottoController {
 
     public List<LottoTicket> drawTickets(int purchaseCount) {
         return lottoManager.drawTickets(purchaseCount);
+    }
+
+    public Map<Rank, Integer> winningStatistics(Lotto lotto, Bonus bonus, List<LottoTicket> tickets) {
+        Map<Rank, Integer> ranks = initRank();
+        for (LottoTicket ticket : tickets) {
+            int count = lottoManager.matchCount(lotto, ticket);
+            boolean bonusMatch = bonus.matches(ticket);
+            Rank rank = Rank.valueOf(count, bonusMatch);
+            ranks.put(rank, ranks.getOrDefault(rank, 0) + 1);
+        }
+        return ranks;
+    }
+
+    private Map<Rank, Integer> initRank() {
+        Map<Rank, Integer> ranks = new EnumMap<>(Rank.class);
+        for (Rank rank : Rank.values()) {
+            ranks.put(rank, 0);
+        }
+        return ranks;
     }
 }
