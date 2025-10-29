@@ -1,9 +1,11 @@
 package lotto;
 
 import java.util.List;
+import java.util.Map;
 import lotto.domain.Bonus;
 import lotto.domain.Lotto;
 import lotto.domain.LottoTicket;
+import lotto.domain.Rank;
 import lotto.presentation.LottoController;
 import lotto.ui.InputView;
 import lotto.ui.OutputView;
@@ -23,6 +25,9 @@ public class Application {
 
         Lotto lotto = controller.drawNumbers();
         Bonus bonus = controller.drawBonus(lotto);
+
+        Map<Rank, Integer> winningStatistics = controller.winningStatistics(lotto, bonus, tickets);
+        outputView.winningStatistics(winningStatistics);
 
     }
 }
