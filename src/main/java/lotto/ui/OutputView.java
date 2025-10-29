@@ -26,4 +26,8 @@ public class OutputView {
             System.out.println(rank + " - " + winningStatistics.get(rank) + "개");
         }
     }
+
+    public void profitRate(double profitRate) {
+        System.out.println("총 수익률은 " + profitRate + "%입니다.");
+    }
 }

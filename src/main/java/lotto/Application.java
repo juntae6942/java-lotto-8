@@ -28,6 +28,7 @@ public class Application {
 
         Map<Rank, Integer> winningStatistics = controller.winningStatistics(lotto, bonus, tickets);
         outputView.winningStatistics(winningStatistics);
-
+        double profitRate = controller.profitRate(purchaseAmount, winningStatistics);
+        outputView.profitRate(profitRate);
     }
 }
