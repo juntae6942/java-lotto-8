@@ -15,10 +15,6 @@ public class LottoManager {
 
     private static final int LOTTO_PRICE = 1000;
 
-    public int matchCount(Lotto lotto, LottoTicket ticket) {
-        return lotto.matchCount(ticket);
-    }
-
     public int purchaseCount(int purchaseAmount) {
         return purchaseAmount / LOTTO_PRICE;
     }
@@ -32,7 +28,7 @@ public class LottoManager {
     public Map<Rank, Integer> calculateStatistics(Lotto lotto, Bonus bonus, List<LottoTicket> tickets) {
         Map<Rank, Integer> ranks = initRank();
         for (LottoTicket ticket : tickets) {
-            int count = matchCount(lotto, ticket);
+            int count = lotto.matchCount(ticket);
             boolean bonusMatch = bonus.matches(ticket);
             Rank rank = Rank.valueOf(count, bonusMatch);
             ranks.put(rank, ranks.getOrDefault(rank, 0) + 1);
