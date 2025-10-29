@@ -1,5 +1,6 @@
 package lotto;
 
+import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
 import java.util.Map;
 import lotto.domain.Bonus;
@@ -26,6 +27,7 @@ public class Application {
         Lotto lotto = readDrawNumbers(inputView, outputView, controller);
         Bonus bonus = readBonus(lotto, inputView, outputView, controller);
         winningStatisticsResult(lotto, bonus, tickets, purchaseAmount, outputView, controller);
+        Console.close();
     }
 
     private static void winningStatisticsResult(Lotto lotto, Bonus bonus, List<LottoTicket> tickets,
