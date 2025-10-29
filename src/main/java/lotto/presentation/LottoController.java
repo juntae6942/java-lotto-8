@@ -13,6 +13,7 @@ import lotto.common.NumberValidator;
 import lotto.domain.Bonus;
 import lotto.domain.Lotto;
 import lotto.domain.LottoTicket;
+import lotto.domain.ProfitRateCalculator;
 import lotto.domain.Rank;
 import lotto.ui.InputView;
 
@@ -20,10 +21,12 @@ public class LottoController {
 
     private final InputView inputView;
     private final LottoManager lottoManager;
+    private final ProfitRateCalculator profitRateCalculator;
 
     public LottoController(InputView inputView) {
         this.inputView = inputView;
         this.lottoManager = new LottoManager();
+        this.profitRateCalculator = new ProfitRateCalculator();
     }
 
     public int purchaseAmount() {
@@ -79,6 +82,10 @@ public class LottoController {
 
     public List<LottoTicket> drawTickets(int purchaseCount) {
         return lottoManager.drawTickets(purchaseCount);
+    }
+
+    public double profitRate(int purchaseAmount, Map<Rank, Integer> winningStatistics) {
+        return profitRateCalculator.calculateProfitRate(purchaseAmount, winningStatistics);
     }
 
     public Map<Rank, Integer> winningStatistics(Lotto lotto, Bonus bonus, List<LottoTicket> tickets) {
