@@ -4,19 +4,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lotto.application.LottoManager;
 import lotto.application.validator.LottoValidator;
 import lotto.application.validator.PurchaseAmountValidator;
 import lotto.common.NumberValidator;
 import lotto.domain.Bonus;
 import lotto.domain.Lotto;
+import lotto.domain.LottoTicket;
 import lotto.ui.InputView;
 
 public class LottoController {
 
     private final InputView inputView;
+    private final LottoManager lottoManager;
 
-    public LottoController() {
-        this.inputView = new InputView();
+    public LottoController(InputView inputView) {
+        this.inputView = inputView;
+        this.lottoManager = new LottoManager();
     }
 
     public int purchaseAmount() {
@@ -64,5 +68,13 @@ public class LottoController {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public int purchaseCount(int purchaseAmount) {
+        return lottoManager.purchaseCount(purchaseAmount);
+    }
+
+    public List<LottoTicket> drawTickets(int purchaseCount) {
+        return lottoManager.drawTickets(purchaseCount);
     }
 }
