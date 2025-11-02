@@ -2,7 +2,7 @@ package lotto.domain;
 
 public class Bonus {
 
-    int number;
+    private final int number;
 
     public Bonus(int number) {
         this.number = number;
