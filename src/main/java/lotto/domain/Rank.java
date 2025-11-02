@@ -3,6 +3,7 @@ package lotto.domain;
 import java.util.Map;
 
 public enum Rank {
+
     NONE(0, false, "0원"),
     FIFTH(3, false, "5,000원"),
     FOURTH(4, false, "50,000원"),
