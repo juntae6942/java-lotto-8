@@ -3,6 +3,8 @@ package lotto.domain;
 import java.util.List;
 
 public class Lotto {
+
+    private final static  int LOTTO_NUMBER_COUNT = 6;
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -24,13 +26,13 @@ public class Lotto {
     }
 
     private void validate(List<Integer> numbers) {
-        if (numbers.size() != 6) {
+        if (numbers.size() != LOTTO_NUMBER_COUNT) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
         }
     }
 
     private void duplicate(List<Integer> numbers) {
-        if (numbers.stream().distinct().count() != 6) {
+        if (numbers.stream().distinct().count() != LOTTO_NUMBER_COUNT) {
            throw new IllegalArgumentException("[ERROR] 중복된 로또 번호를 포함하고 있습니다.");
         }
     }
